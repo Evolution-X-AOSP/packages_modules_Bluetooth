@@ -16,7 +16,6 @@
 
 package com.android.bluetooth.bthelper;
 
-import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
@@ -27,14 +26,21 @@ public class AirPodsBatteryInitializer extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
-            final int state = intent.getIntExtra(BluetoothProfile.EXTRA_STATE, -1);
-            final BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            handleA2dpStateChanged(context, state, device);
+        if (intent == null || intent.getAction() == null) {
+            return;
+        }
+        if (intent.getAction().equals("android.bluetooth.a2dp.profile.action.CONNECTION_STATE_CHANGED")) {
+            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            if (!AirPodsConstants.shouldBeAirPods(device)) {
+                return;
+            } else if (AirPodsConstants.shouldBeAirPods(device)) {
+                final int state = intent.getIntExtra(BluetoothProfile.EXTRA_STATE, -1);
+                handleAirpodsStateChanged(context, state, device);
+            }
         }
     }
 
-    private void handleA2dpStateChanged(Context context, int state, BluetoothDevice device) {
+    private void handleAirpodsStateChanged(Context context, int state, BluetoothDevice device) {
         if (state == BluetoothProfile.STATE_CONNECTED) {
             AirPodsInitializer.startBatteryService(context, device);
         } else if (state == BluetoothProfile.STATE_DISCONNECTING ||
