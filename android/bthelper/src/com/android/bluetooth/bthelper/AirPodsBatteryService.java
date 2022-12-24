@@ -239,7 +239,6 @@ public class AirPodsBatteryService extends Service {
         }
     }
 
-    // TODO: Fix non-protected broadcast from system error spam
     private void broadcastStatusChanges(Intent intent) {
         final Intent statusIntent = new Intent("batterywidget.impl.action.update_bluetooth_data").setPackage("com.google.android.settings.intelligence");
         statusIntent.putExtra("android.bluetooth.device.action.BATTERY_LEVEL_CHANGED", intent);

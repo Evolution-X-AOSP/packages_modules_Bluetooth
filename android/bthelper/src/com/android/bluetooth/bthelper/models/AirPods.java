@@ -76,25 +76,26 @@ public class AirPods {
         final int battery = data[6];
         final int charging = data[7];
 
-        rightLeft = ((flags & FLAG_REVERSED) != 0);
+        rightLeft = ((flags & FLAG_REVERSED) == 0);
     
         if (rightLeft == false) {
             batteryLeft = (battery >> 4) & 0xf;
             batteryRight = battery & 0xf;
             chargingLeft = (charging & MASK_CHARGING_LEFT) != 0;
             chargingRight = (charging & MASK_CHARGING_RIGHT) != 0;
+            usingLeft = (flags & MASK_USING_LEFT) != 0;
+            usingRight = (flags & MASK_USING_RIGHT) != 0;
         } else {
             batteryLeft = battery & 0xf;
             batteryRight = (battery >> 4) & 0xf;
             chargingLeft = (charging & MASK_CHARGING_RIGHT) != 0;
             chargingRight = (charging & MASK_CHARGING_LEFT) != 0;
+            usingLeft = (flags & MASK_USING_RIGHT) != 0;
+            usingRight = (flags & MASK_USING_LEFT) != 0;
         }
 
         batteryCase = charging & 0xf;
         chargingCase = (charging & MASK_CHARGING_CASE) != 0;
-
-        usingLeft = (flags & MASK_USING_LEFT) != 0;
-        usingRight = (flags & MASK_USING_RIGHT) != 0;
 
         if (chargingLeft == true
             && chargingRight == true) {

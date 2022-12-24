@@ -44,7 +44,7 @@ public class Generic {
         final int flags = data[5];
         final int battery = data[6];
 
-        rightLeft = ((flags & FLAG_REVERSED) != 0);
+        rightLeft = ((flags & FLAG_REVERSED) == 0);
 
         if (rightLeft == false) {
             batteryLeft = (battery >> 4) & 0xf;
