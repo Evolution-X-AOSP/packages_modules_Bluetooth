@@ -61,8 +61,8 @@ uint8_t bta_dm_search_get_state() { return bta_dm_search_cb.state; }
  *
  ******************************************************************************/
 bool bta_dm_search_sm_execute(BT_HDR_RIGID* p_msg) {
-  LOG_INFO("bta_dm_search_sm_execute state:%d, event:0x%x",
-           bta_dm_search_get_state(), p_msg->event);
+  APPL_TRACE_EVENT("bta_dm_search_sm_execute state:%d, event:0x%x",
+           bta_dm_search_cb.state, p_msg->event);
 
   tBTA_DM_MSG* message = (tBTA_DM_MSG*)p_msg;
   switch (bta_dm_search_cb.state) {
