@@ -807,13 +807,6 @@ void log_classic_pairing_command_status(std::unique_ptr<CommandView>& command_vi
       address = remote_name_request_cancel_view.GetBdAddr();
       break;
     }
-    case OpCode::LINK_KEY_REQUEST_REPLY: {
-      LinkKeyRequestReplyView link_key_request_reply_view
-      = LinkKeyRequestReplyView::Create(std::move(security_command_view));
-      ASSERT(link_key_request_reply_view.IsValid());
-      address = link_key_request_reply_view.GetBdAddr();
-      break;
-    }
     case OpCode::LINK_KEY_REQUEST_NEGATIVE_REPLY: {
       LinkKeyRequestNegativeReplyView link_key_request_negative_reply_view
       = LinkKeyRequestNegativeReplyView::Create(std::move(security_command_view));
